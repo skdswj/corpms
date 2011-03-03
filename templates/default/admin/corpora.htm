@@ -1,0 +1,79 @@
+{if $op == 'default' || $op == 'display'}
+<div class="main_header">
+	<div id="icon-center" class="icon32"><br /></div>
+	<h2>社团管理</h2>
+</div>
+<div class="content">
+	<h3><a href="admincp.php?ac=corpora&op=show_add">添加社团</a></h3>	
+	<table border="1" >
+		<tr><td>ID</td><td>社团名称</td><td>学院</td><td colspan="3">操作</td></tr>
+		{loop $corp_arr $corp}
+			<tr>
+				<td>{$corp['cid']}</td>
+				<td><a href="admincp.php?ac=corpora&op=showinfo&cid={$corp['cid']}" >{$corp['cname']}</a></td>
+				<td>{$corp['coname']}</td>
+				<td><a href="admincp.php?ac=corpora&op=show_change&cid={$corp['cid']}" >修改</a></td>
+				<td><a href="admincp.php?ac=corpora&op=add_info&cid={$corp['cid']}" >添加附加信息</a></td>
+				<td><a href="admincp.php?ac=corpora&op=del&cid={$corp['cid']}" >注销</a></td>
+			</tr>
+		{/loop}
+	</table>
+		<!-- 页码显示段 -->
+	{if $page > $page_arr[0]}<a href="admincp.php?ac=corpora&page={echo $page-1}">上一页</a>&nbsp;{/if}
+	{loop $page_arr $no}
+		{if $no != $page}
+			&nbsp;<a href="admincp.php?ac=corpora&page={$no}">{$no}</a>
+		{else}
+			&nbsp;{$no}
+		{/if}
+	{/loop}
+	{if $page < $no}&nbsp;<a href="admincp.php?ac=corpora&page={$page+1}">下一页</a>{/if}
+</div>
+{/if}
+{if $op == 'showinfo'}
+<div class="main_header">
+	<div id="icon-center" class="icon32"><br /></div>
+	<h2>社团信息</h2>
+</div>
+<div class="content">
+	<table border="1" >
+		<tr><td>ID</td><td>{$cinfo['cid']}</td></tr>
+		<tr><td>社团名称</td><td>{$cinfo['cname']}</td></tr>
+		<tr><td>学院</td><td>{$cinfo['coname']}</td></tr>
+		<tr><td>分类</td><td>{$cinfo['tname']}</td></tr>
+		<tr><td>会费</td><td>{$cinfo['dues']}</td></tr>
+		<tr><td>社团简介</td><td>{$cinfo['information']}</td></tr>
+		<tr><td>附加信息</td><td>{$cinfo['others']}</td></tr>
+		<tr><td><a href="admincp.php?ac=corpora&op=show_change&cid={$cinfo['cid']}" >修改</a></td>
+		<td><a href="admincp.php?ac=corpora&op=del&cid={$cinfo['cid']}" >注销</a></td></tr>
+	</table>
+</div>
+{/if}
+{if $op == 'show_add'}
+<div class="main_header">
+	<div id="icon-center" class="icon32"><br /></div>
+	<h2>添加社团</h2>
+</div>
+<div class="content">
+	<form action="admincp.php?ac=corpra&op=add" method="post">
+		<label for="cname">社团名称：</label><input type="text" id="cname" name="cname" />
+		<label for="cid">社团编号：</label><input type="text" id="cid" name="cid" />
+		<label for="dues">会费：</label><input type="text" id="dues" name="dues" />
+		<label for="dues">会费：</label><input type="text" id="dues" name="dues" />
+		所属学院：<select name="coid">
+						{loop}
+							<option value="{$co['coid']}">{$co['cname']}</option>
+						{/loop}		        
+		        </select>
+		所属类型：<select name="tid">
+						{loop}
+							<option value="{$type['tid']}">{$type['tname']}</option>
+						{/loop}		        
+		        </select>
+		社团简介：<textarea name="info"></textarea>
+		附加信息：<textarea name="others"></textarea>
+	</form>
+</div>
+{/if}
+
+

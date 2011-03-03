@@ -1,0 +1,143 @@
+{if $op == 'default' || $op == 'display'}
+<div class="main_header">
+	<div id="icon-center" class="icon32"><br /></div>
+	<h2>会员管理</h2>
+</div>
+<div class="content">
+	<table border="1" >
+		<tr><td>ID</td><td>姓名</td><td>学号</td><td>学院</td><td colspan="3">操作</td></tr>
+		{loop $user_arr $user}
+			<tr><td>{$user['uid']}</td><td><a href="admincp.php?ac=user&op=showinfo&uid={$user['uid']}" >{$user['username']}</a></td><td>{$user['number']}</td><td>{$user['coname']}</td><td><a href="admincp.php?ac=user&op=show_change&uid={$user['uid']}" >修改</a></td><td><a href="admincp.php?ac=user&op=new_password&uid={$user['uid']}" >修改密码</a></td><td><a href="admincp.php?ac=user&op=del&uid={$user['uid']}" >删除</a></td></tr>
+		{/loop}
+	</table>
+		<!-- 页码显示段 -->
+	{if $page > $page_arr[0]}<a href="admincp.php?ac=user&page={echo $page-1}">上一页</a>&nbsp;{/if}
+	{loop $page_arr $no}
+		{if $no != $page}
+			&nbsp;<a href="admincp.php?ac=user&page={$no}">{$no}</a>
+		{else}
+			&nbsp;{$no}
+		{/if}
+	{/loop}
+	{if $page < $no}&nbsp;<a href="admincp.php?ac=user&page={$page+1}">下一页</a>{/if}
+</div>
+{/if}
+{if $op == 'showinfo'}
+<div class="main_header">
+	<div id="icon-center" class="icon32"><br /></div>
+	<h2>会员信息</h2>
+</div>
+<div class="content">
+	<table border="1" >
+		<tr><td>ID</td><td>{$userinfo['uid']}</td></tr>
+		<tr><td>姓名</td><td>{$userinfo['username']}</td></tr>
+		<tr><td>学号</td><td>{$userinfo['number']}</td></tr>
+		<tr><td>性别</td><td>{if $userinfo['sex'] == 0}女{else}男{/if}</td></tr>
+		<tr><td>学院</td><td>{$userinfo['coname']}</td></tr>
+		<tr><td>专业</td><td>{$userinfo['mname']}</td></tr>
+		<tr><td>班级</td><td>{$userinfo['class']}</td></tr>
+		<tr><td>联系方式</td><td>{$userinfo['phone']}</td></tr>
+		<tr><td>用户类型</td><td>{$userinfo['gname']}</td></tr>
+		<tr><td>社团</td><td>职务</td></tr>
+		{if $co_arr == array()}
+		<tr><td>无</td><td>无</td></tr>
+		{else}		
+		{loop $co_arr $co}		
+		<tr><td>{$co['cname']}</td><td>{$co['dname']}</td></tr>
+		{/loop}
+		{/if}
+		<tr><td><a href="admincp.php?ac=user&op=show_change&uid={$userinfo['uid']}" >修改</a></td><td><a href="admincp.php?ac=user&op=del&uid={$userinfo['uid']}" >删除</a></tr>
+		<tr><td colspan="2"><a href="admincp.php?ac=user&op=new_password&uid={$user['uid']}" >修改密码</a></td></tr>
+	</table>
+</div>
+{/if}
+{if $op == 'show_change'}
+<div class="main_header">
+	<div id="icon-center" class="icon32"><br /></div>
+	<h2>会员信息修改</h2>
+</div>
+<div class="content">
+	<form action="admincp.php?ac=user&op=change&uid={$userinfo['uid']}" method="post">
+		姓名：<input type="text" name="username" value="{$userinfo['username']}" /><br />
+		学号：<input type="text" name="number" value="{$userinfo['number']}" /><br />
+		性别：<input type="radio" name="sex" value="1" {if $userinfo['sex'] == 1}checked = "checked"{/if} />男<input type="radio" name="sex" value="0" {if $userinfo['sex'] == 0} checked = "checked"{/if} />女<br />
+		学院：<select name="coid">
+					{loop $col_arr $col}
+						{if $col['coid'] == $userinfo['coid']}
+								{eval $select = 'selected = "selected"'}
+						{else}
+								{eval $select = ''}
+						{/if}
+						<option value="{$col['coid']}" {$select}>{$col['coname']}</option>
+					{/loop}
+			  </select><br />
+		专业：<select name="mid">
+					{loop $m_arr $m}
+						{if $m['mid'] == $userinfo['mid']}
+								{eval $select = 'selected = "selected"'}
+						{else}
+								{eval $select = ''}
+						{/if}
+						<option value="{$m['mid']}" {$select}>{$m['mname']}</option>
+					{/loop}
+			  </select><br />
+		班级：<input type="text" name="class" value="{$userinfo['class']}" /><br />
+		联系方式：<input type="text" name="phone" value="{$userinfo['phone']}" /><br />
+		所在社团：{if $co_arr != array()}	
+					<table border="1">
+						<tr><td>社团名称</td><td>职务</td><td>操作</td></tr>					
+					{loop $co_arr $co}
+						<tr>
+							<td>{$co['cname']}</td>
+							<td>{loop $du_arr $du}
+									{if $co['did'] == $du['did']}
+										{eval $check = 'checked = "checked"'}
+									{else}
+										{eval $check = ''}
+									{/if}
+									<input type="radio" name="did[{$co['cid']}]" value="{$du['did']}" {$check} />{$du['dname']}
+								 {/loop}
+							</td>
+							<td><a href="">退出社团</a></td>
+						</tr>					
+					{/loop}
+					</table>
+					{else}无<br /><input type="hidden" name="did" value="" />
+					{/if}
+		用户类型：{loop $gr_arr $gr}
+									{if $userinfo['gid'] == $gr['gid']}
+										{eval $check = 'checked = "checked"'}
+									{else}
+										{eval $check = ''}
+									{/if}
+									<input type="radio" name="gid" value="{$gr['gid']}" {$check} />{$gr['gname']}
+				  {/loop}
+		
+		
+		<br /><input type="submit" value="修改"/>
+	</form>
+</div>	
+{/if}
+{if $op == 'new_password'}
+	<div class="main_header">
+		<div id="icon-center" class="icon32"><br /></div>
+		<h2>修改密码</h2>
+	</div>
+	<div class="content">
+		<form action="admincp.php?ac=user&op=new_psw&uid={$_GET['uid']}" method="post">
+			<label for="newpsw">输入新密码</label><input type="password" id="newpsw" name="newpsw"/><br />
+			<label for="newpsw2">再次输入密码</label><input type="password" id="newpsw2" name="newpsw2"/><br />
+			<input type="submit" value="提交" />
+		</form>
+	</div>
+{/if}
+{if $op == 'new_psw'}
+	<div class="main_header">
+		<div id="icon-center" class="icon32"><br /></div>
+		<h2>修改密码</h2>
+	</div>
+	<div class="content">
+		<h1>修改成功！</h1><br />
+		<h3><a href="admincp.php?ac=user">返回</a></h3>		
+	</div>
+{/if}
