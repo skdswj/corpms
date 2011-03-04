@@ -1,0 +1,59 @@
+<div class="main_header">
+	<div id="icon-center" class="icon32"><br /></div>
+	<h2>社团信息</h2>
+</div>
+<div class="content">
+	{if $gid != 1}<a href="admincp.php?ac=upload&op=upload_do" >上传文件</a>{/if}
+	{if $op == 'default' || $op == 'list'}
+		<table border="1" >
+		<tr><td>文件编号</td><td>文件名</td><td>上传时间</td><td>文件说明</td><td colspan="2">操作</td></tr>
+		{loop $file_arr $file}
+			<tr>
+				<td>{$file['fid']}</td>
+				<td><a href="{$file['savedir']}">{$file['originalname']}</a></td>
+				<td>{$file['date']}</td>
+				<td>{$file['description']}</td>
+				<td><a href="admincp.php?ac=user&op=show_change&uid={$user['uid']}" >修改</a></td><td><a href="admincp.php?ac=user&op=del&uid={$user['uid']}" >删除</a></td>
+			</tr>
+		{/loop}
+		</table>
+			<!-- 页码显示段 -->
+		{if $page > $page_arr[0]}<a href="admincp.php?ac=upload&page={echo $page-1}">上一页</a>&nbsp;{/if}
+		{loop $page_arr $no}
+			{if $no != $page}
+				&nbsp;<a href="admincp.php?ac=upload&page={$no}">{$no}</a>
+			{else}
+				&nbsp;{$no}
+			{/if}
+		{/loop}
+		{if $page < $no}&nbsp;<a href="admincp.php?ac=upload&page={echo $page+1}">下一页</a>{/if}
+	{elseif $op == 'upload_do'}
+	<form enctype="multipart/form-data" action="admincp.php?ac=upload&op=process" method="POST">
+		<table width="486" height="103" border="1" cellpadding="0" cellspacing="0" >
+		<tr>
+		<td height="30" colspan="2" align="right">
+		<div align="center" >文件上传</div></td>
+		</tr>
+		<tr>
+		<td width="103" height="45" align="right"><div align="center">
+		<span >*</span>文件上传地址
+		</div>
+		</td>
+		<td width="377" height="45"><input type="file" name="file_name">(大小<10M为宜)</td>
+		</tr>
+		<tr>
+		<td width="103" height="45" align="right"><div align="center">
+		<span >*</span>上传文件说明
+		</div>
+		</td>
+		<td width="377" height="45"><textarea name="description" cols="30" rows="3"></textarea></td>
+		</tr>
+		<tr>
+		<td height="33" align="right" colspan="2">
+		<p align="center"><input type="submit" value="上传" name="add">
+		&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" value="重置" name="B2"></p></td>
+		</tr>
+		</table> 
+	</form>
+	{/if}
+</div>

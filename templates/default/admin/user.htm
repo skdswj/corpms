@@ -29,7 +29,7 @@
 </div>
 <div class="content">
 	<table border="1" >
-		<tr><td>ID</td><td>{$userinfo['uid']}</td></tr>
+		<tr><td>ID</td><td>{$_GET['uid']}</td></tr>
 		<tr><td>姓名</td><td>{$userinfo['username']}</td></tr>
 		<tr><td>学号</td><td>{$userinfo['number']}</td></tr>
 		<tr><td>性别</td><td>{if $userinfo['sex'] == 0}女{else}男{/if}</td></tr>
@@ -46,8 +46,8 @@
 		<tr><td>{$co['cname']}</td><td>{$co['dname']}</td></tr>
 		{/loop}
 		{/if}
-		<tr><td><a href="admincp.php?ac=user&op=show_change&uid={$userinfo['uid']}" >修改</a></td><td><a href="admincp.php?ac=user&op=del&uid={$userinfo['uid']}" >删除</a></tr>
-		<tr><td colspan="2"><a href="admincp.php?ac=user&op=new_password&uid={$user['uid']}" >修改密码</a></td></tr>
+		<tr><td><a href="admincp.php?ac=user&op=show_change&uid={$_GET['uid']}" >修改</a></td><td><a href="admincp.php?ac=user&op=del&uid={$_GET['uid']}" >删除</a></tr>
+		<tr><td colspan="2"><a href="admincp.php?ac=user&op=new_password&uid={$_GET['uid']}" >修改密码</a></td></tr>
 	</table>
 </div>
 {/if}
