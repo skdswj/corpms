@@ -43,6 +43,7 @@ if(!defined('IN_CORP')) {
 32.add_limit ($sql, $start, $items_per_page)
 33.page_division ($count_sql, $sql, $page, &$page_arr, $items_per_page=20)
 34.build_selection($arr,$name)
+35.run_log($uid,$username,$str)
 ////////////////////////////////////////////////////////////*/
 
 /** 
@@ -617,6 +618,18 @@ function create_html($out_str,$file_name){
 	$fp = fopen($paperdir.$file_name.'.html', "w");
 	fwrite($fp, $out_str);
 	fclose($fp);
+}
+
+/** 
+* 函数名：
+* 功  能：生成日志
+* 参  数：
+* 返回值：$str
+**/
+function run_log($uid,$username,$motion){
+	global $db;
+	$sql = 'INSERT INTO '.tname('log')." VALUES(NULL,now(),'$uid','$username','$motion')";
+	return $db->query($sql);
 }
 //---------------------------------以上是CORP专属用函数------------------------------
 ?>

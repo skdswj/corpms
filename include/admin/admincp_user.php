@@ -78,6 +78,7 @@
 		//print_r($_POST);
 		//echo $sql;
 		$db->query($sql);
+		run_log(getcookie('uid'),getcookie('username'),"修改$username(学号$number)的信息");
 		//显示更改后信息		
 		header("HTTP/1.1 301 Moved Permanently");
 		header("Location: admincp.php?ac=user&op=showinfo&uid={$uid}");

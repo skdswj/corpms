@@ -1,0 +1,27 @@
+<div class="main_header">
+	<div id="icon-center" class="icon32"><br /></div>
+	<h2>社团管理</h2>
+</div>
+<div class="content">
+	<table border="1" >
+		<tr><td>日志编号</td><td>时间</td><td>操作人</td><td>内容</td></tr>
+		{loop $log_arr $log}
+			<tr>
+				<td>{$log['lid']}</td>
+				<td>{$log['date']}</td>
+				<td><a href="admincp.php?ac=user&op=showinfo&uid={$log['uid']}" >{$log['username']}</a></td>
+				<td>{$log['motion']}</td>
+			</tr>
+		{/loop}
+	</table>
+		<!-- 页码显示段 -->
+	{if $page > $page_arr[0]}<a href="admincp.php?ac=corpora&page={echo $page-1}">上一页</a>&nbsp;{/if}
+	{loop $page_arr $no}
+		{if $no != $page}
+			&nbsp;<a href="admincp.php?ac=corpora&page={$no}">{$no}</a>
+		{else}
+			&nbsp;{$no}
+		{/if}
+	{/loop}
+	{if $page < $no}&nbsp;<a href="admincp.php?ac=corpora&page={$page+1}">下一页</a>{/if}
+</div>
