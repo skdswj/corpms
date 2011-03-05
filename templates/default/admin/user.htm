@@ -4,6 +4,8 @@
 	<h2>会员管理</h2>
 </div>
 <div class="content">
+	当前显示报社团数:<font color=red>{$msg}</font>
+	<form action="admincp.php?ac=user&op=divide" method="post">查询报多个社团人员名单:<select name="num"><option value="none">未注册社团</option><option value="one">1个社团</option><option value="two">2个社团</option><option value="more_than_two">大于2个社团</option></select><input type="submit" value="确定查询"/></form><br>
 	<table border="1" >
 		<tr><td>ID</td><td>姓名</td><td>学号</td><td>学院</td><td colspan="3">操作</td></tr>
 		{loop $user_arr $user}

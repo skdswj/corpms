@@ -3,11 +3,33 @@
 	if (!defined('IN_CORP')) {
 		exit('Access Denied');
 	}
-	if($op == 'default' || $op == 'display'){
+	if($op == 'default' || $op == 'divide' || $op == 'display'){
 		$count_sql = 'SELECT COUNT(*) FROM '.tname('user');
-		$sql = 'SELECT * FROM '.tname('user').','.tname('college').' WHERE corp_college.coid = corp_user.coid ORDER BY `uid` DESC {LMT)';
+		if($op == 'divide' && !empty($_POST['num'])){
+			if($_POST['num'] == 'none'){
+				$sub_sql = 'SELECT DISTINCT `uid` FROM '.	tname('user_corporation');
+				$msg = '未选社团的会员';
+			}else if($_POST['num'] == 'one'){
+				$sub_sql = 'SELECT `uid` FROM '.	tname('user_corporation').' GROUP BY `uid` HAVING COUNT(*) = 1';
+				$msg = '选一个社团的会员';
+			}else if($_POST['num'] == 'two'){
+				$sub_sql = 'SELECT `uid` FROM '.	tname('user_corporation').' GROUP BY `uid` HAVING COUNT(*) = 2';
+				$msg = '选两个社团的会员';
+			}else{ 
+				$sub_sql = 'SELECT `uid` FROM '.	tname('user_corporation').' GROUP BY `uid` HAVING COUNT(*) > 2';
+				$msg = '选大于两个社团的会员';
+			}
+			if($_POST['num'] == 'none')
+				$sql = 'SELECT * FROM '.tname('user').','.tname('college').' WHERE corp_college.coid = corp_user.coid AND `uid` NOT IN ('.$sub_sql.') ORDER BY `uid` DESC {LMT)';
+			else 
+				$sql = 'SELECT * FROM '.tname('user').','.tname('college').' WHERE corp_college.coid = corp_user.coid AND `uid` IN ('.$sub_sql.') ORDER BY `uid` DESC {LMT)';
+		}else{
+			$sql = 'SELECT * FROM '.tname('user').','.tname('college').' WHERE corp_college.coid = corp_user.coid ORDER BY `uid` DESC {LMT)';
+			$msg = '所有会员';
+		}
 		$page = isset($_GET['page']) ? max(intval($_GET['page']), 1) : 1;
 		$user_arr = page_division($count_sql, $sql, $page, $page_arr);
+		$op = 'display';
 	}
 	if($op == 'showinfo'){
 		//显示会员信息
