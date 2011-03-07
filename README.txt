@@ -1,2 +1,2 @@
 学生社团管理系统
-
+已导出数据库到install/，修改了corp_corporation表

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2011 年 03 月 02 日 15:30
+-- 生成日期: 2011 年 03 月 07 日 15:42
 -- 服务器版本: 5.1.49
 -- PHP 版本: 5.3.3-1ubuntu9.1
 
@@ -18,8 +18,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- 数据库: `corpms`
 --
-CREATE DATABASE `corpms` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `corpms`;
 
 -- --------------------------------------------------------
 
@@ -57,6 +55,8 @@ CREATE TABLE IF NOT EXISTS `corp_corporation` (
   `tid` tinyint(3) unsigned NOT NULL COMMENT '类型',
   `information` text NOT NULL COMMENT '社团简介',
   `others` text NOT NULL COMMENT '管理员添加',
+  `maxnum` smallint(4) unsigned NOT NULL COMMENT '社团最大人数',
+  `curnum` smallint(4) unsigned NOT NULL COMMENT '当前人数',
   PRIMARY KEY (`cid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='社团';
 
@@ -64,8 +64,13 @@ CREATE TABLE IF NOT EXISTS `corp_corporation` (
 -- 转存表中的数据 `corp_corporation`
 --
 
-INSERT INTO `corp_corporation` (`cid`, `cname`, `coid`, `dues`, `tid`, `information`, `others`) VALUES
-('QD-05-09', '静语计算机协会', 1, 20, 1, '静语计算机协会', '静语计算机协会');
+INSERT INTO `corp_corporation` (`cid`, `cname`, `coid`, `dues`, `tid`, `information`, `others`, `maxnum`, `curnum`) VALUES
+('QD-05-09', '静语计算机协会', 1, 20, 1, '静语计算机协会', '静语计算机协会', 500, 300),
+('QD-12-65', '街舞', 2, 100, 3, '街舞啊', '啊哈哈哈', 200, 0),
+('QD-04-05', '轮滑', 2, 3000, 2, '斯蒂芬', '我去谔谔', 200, 0),
+('QD-12-34', '李阳疯狂英语', 3, 150, 2, '李阳啊', '风啊', 500, 0),
+('1232131', '123', 1, 1231, 1, '12312', '3123', 12312, 0),
+('31313', '12211', 1, 123, 1, '123', '123', 123, 0);
 
 -- --------------------------------------------------------
 
@@ -105,10 +110,10 @@ CREATE TABLE IF NOT EXISTS `corp_group` (
 --
 
 INSERT INTO `corp_group` (`gid`, `gname`) VALUES
-(4, '超级管理员'),
-(1, '普通会员'),
+(0, '超级管理员'),
+(1, '管理员'),
 (2, '社团负责人'),
-(3, '管理员');
+(3, '普通会员');
 
 -- --------------------------------------------------------
 
@@ -174,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `corp_user` (
   `phone` char(11) NOT NULL COMMENT '联系方式',
   `gid` tinyint(1) unsigned NOT NULL COMMENT '用户类型',
   PRIMARY KEY (`uid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户信息' AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户信息' AUTO_INCREMENT=6 ;
 
 --
 -- 转存表中的数据 `corp_user`
@@ -183,7 +188,8 @@ CREATE TABLE IF NOT EXISTS `corp_user` (
 INSERT INTO `corp_user` (`uid`, `username`, `sex`, `number`, `password`, `coid`, `mid`, `class`, `phone`, `gid`) VALUES
 (1, 'admin', 1, '0', 'b605e86d02eef8bfd0646f6a704c17c9', 0, 0, '0', '0', 4),
 (2, 'sdf', 1, '0901051722', '99c6cf36db8253371f1468ae0d30d2a2', 1, 1, '0906', '15054218192', 4),
-(4, 'qqqq', 1, '1', 'b605e86d02eef8bfd0646f6a704c17c9', 1, 1, '0906', '16777215', 1);
+(4, 'qqqq', 1, '1', 'b605e86d02eef8bfd0646f6a704c17c9', 1, 1, '0906', '16777215', 1),
+(0, 'test', 1, '0901051715', '134', 1, 1, '0906', '12354678', 3);
 
 -- --------------------------------------------------------
 
