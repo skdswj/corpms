@@ -93,6 +93,8 @@
 		//删除会员
 		$sql = 'DELETE FROM '.tname('user').' WHERE `uid` = '.$_GET['uid'].' LIMIT 1';
 		$db->query($sql);
+		$usql = 'DELETE FROM '.tname('user_corporation').' WHERE `uid` = '.$_GET['uid'];
+		$db->query($usql);
 		header("HTTP/1.1 301 Moved Permanently");
 		header("Location: admincp.php?ac=user&op=display");
 	}

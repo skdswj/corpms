@@ -14,22 +14,60 @@
 		$sql = 'SELECT * FROM '.tname('corporation').','.tname('college').','.tname('type').' WHERE corp_college.coid = corp_corporation.coid AND corp_type.tid = corp_corporation.tid AND `cid` = "'.$_GET['cid'].'"';
 		//echo $sql;		
 		$cinfo = $db->fetch_first($sql);
-		//print_r($cinfo);
+		
 	}
 	if($op == 'show_add'){
 		//显示添加社团	
+		$cosql = 'SELECT * FROM '.tname('college');
+		$co_arr = $db->fetch_all($cosql);
+		//print_r($co);
+		$tysql = 'SELECT * FROM '.tname('type');
+		$t_arr = $db->fetch_all($tysql);
 	}
 	if($op == 'add'){
 		//添加社团	
+		$cid = $_POST['cid'];
+		$cname = $_POST['cname'];
+		$coid = $_POST['coid'];
+		$dues = $_POST['dues'];
+		$tid = $_POST['tid'];
+		$information = $_POST['info'];
+		$others = $_POST['others'];
+		$maxnum = $_POST['maxnum'];
+		$sql = "INSERT INTO ".tname('corporation')."(cid,cname,coid,dues,tid,information,others,maxnum,curnum) VALUES ('$cid','$cname','$coid','$dues','$tid','$information','$others','$maxnum','0')";	
+		$db->query($sql);
 	}
 	if($op == 'show_change'){
-		//显示更改社团信息		
-		
+		//显示更改社团信息
+		$sql = 'SELECT * FROM '.tname('corporation').','.tname('college').','.tname('type').' WHERE corp_college.coid = corp_corporation.coid AND corp_type.tid = corp_corporation.tid AND `cid` = "'.$_GET['cid'].'"';		
+		$cinfo = $db->fetch_first($sql);	
+		$cosql = 'SELECT * FROM '.tname('college');
+		$co_arr = $db->fetch_all($cosql);
+		//print_r($cinfo);
+		$tysql = 'SELECT * FROM '.tname('type');
+		$t_arr = $db->fetch_all($tysql);
 	}
 	if($op == 'change'){
 		//更改社团信息
+		$cid = $_GET['cid'];
+		$cname = $_POST['cname'];
+		$coid = $_POST['coid'];
+		$dues = $_POST['dues'];
+		$tid = $_POST['tid'];
+		$information = $_POST['info'];
+		$others = $_POST['others'];
+		$maxnum = $_POST['maxnum'];
+		$curnum = $_POST['curnum'];
+		$sql = "UPDATE ".tname('corporation')." SET cname='$cname',coid='$coid',dues='$dues',tid='$tid',information='$information',others='$others',maxnum='$maxnum',curnum='$curnum' WHERE cid = '$cid'";
+		$db->query($sql);
 	}
 	if($op == 'del'){
-		//删除社团
+		//注销社团
+		$sql = 'DELETE FROM '.tname('corporation').' WHERE `cid` = '.$_GET['cid'].' LIMIT 1';
+		$db->query($sql);
+		$usql = 'DELETE FROM '.tname('user_corporation').' WHERE `cid` = '.$_GET['cid'];
+		$db->query($usql);
+		header("HTTP/1.1 301 Moved Permanently");
+		header("Location: admincp.php?ac=corpora&op=display");
 	}
 ?>

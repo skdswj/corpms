@@ -42,6 +42,7 @@
 		<tr><td>学院</td><td>{$cinfo['coname']}</td></tr>
 		<tr><td>分类</td><td>{$cinfo['tname']}</td></tr>
 		<tr><td>会费</td><td>{$cinfo['dues']}</td></tr>
+		<tr><td>会员</td><td>{$cinfo['curnum']}/{$cinfo['maxnum']}</td></tr>
 		<tr><td>社团简介</td><td>{$cinfo['information']}</td></tr>
 		<tr><td>附加信息</td><td>{$cinfo['others']}</td></tr>
 		<tr><td><a href="admincp.php?ac=corpora&op=show_change&cid={$cinfo['cid']}" >修改</a></td>
@@ -55,25 +56,92 @@
 	<h2>添加社团</h2>
 </div>
 <div class="content">
-	<form action="admincp.php?ac=corpra&op=add" method="post">
-		<label for="cname">社团名称：</label><input type="text" id="cname" name="cname" />
-		<label for="cid">社团编号：</label><input type="text" id="cid" name="cid" />
-		<label for="dues">会费：</label><input type="text" id="dues" name="dues" />
-		<label for="dues">会费：</label><input type="text" id="dues" name="dues" />
+	<form action="admincp.php?ac=corpora&op=add" method="post">
+		<label for="cname">社团名称：</label><input type="text" id="cname" name="cname" /><br />
+		<label for="cid">社团编号：</label><input type="text" id="cid" name="cid" /><br />
+		<label for="dues">会费：</label><input type="text" id="dues" name="dues" /><br />
+		<label for="maxnum">最大人数：</label><input type="text" id="maxnum" name="maxnum" /><br />
 		所属学院：<select name="coid">
-						{loop}
-							<option value="{$co['coid']}">{$co['cname']}</option>
+						{loop $co_arr $co}
+							<option value="{$co['coid']}">{$co['coname']}</option>
 						{/loop}		        
-		        </select>
+		        </select><br />
 		所属类型：<select name="tid">
-						{loop}
+						{loop $t_arr $type}
 							<option value="{$type['tid']}">{$type['tname']}</option>
 						{/loop}		        
-		        </select>
-		社团简介：<textarea name="info"></textarea>
-		附加信息：<textarea name="others"></textarea>
+		        </select><br />
+		社团简介：<textarea name="info"></textarea><br />
+		附加信息：<textarea name="others"></textarea><br />
+		<input type="submit" value="确认添加" />
 	</form>
 </div>
 {/if}
-
-
+{if $op == 'add'}
+	<div class="main_header">
+		<div id="icon-center" class="icon32"><br /></div>
+		<h2>添加社团</h2>
+	</div>
+	<div class="content">	
+		<span class="response">添加成功!</span>
+		<h2><a href="admincp.php?ac=corpora&op=showinfo&cid={$cid}">查看</a></h4>
+		<h2><a href="admincp.php?ac=corpora&op=display">返回</a></h4>
+	</div>
+{/if}
+{if $op == 'show_change'}
+	<div class="main_header">
+		<div id="icon-center" class="icon32"><br /></div>
+		<h2>修改社团</h2>
+	</div>
+	<div class="content">
+		<form action="admincp.php?ac=corpora&op=change&cid={$cinfo['cid']}" method="post">
+			<h3>社团编号：{$cinfo['cid']}</h3>
+			<label for="cname">社团名称：</label><input type="text" id="cname" name="cname" value="{$cinfo['cname']}"/><br />
+			<label for="dues">会费：</label><input type="text" id="dues" name="dues" value="{$cinfo['dues']}"/><br />
+			<label for="maxnum">最大人数：</label><input type="text" id="maxnum" name="maxnum" value="{$cinfo['maxnum']}" /><br />
+			<label for="curnum">当前人数：</label><input type="text" id="curnum" name="curnum" value="{$cinfo['curnum']}" /><br />
+			所属学院：<select name="coid">
+							{loop $co_arr $co}
+								{if $co['coid'] == $cinfo['coid']}
+									{eval $selected = 'selected = "selected"'}
+								{else}
+									{eval $selected = ''}
+								{/if}
+								<option value="{$co['coid']}" {$selected} >{$co['coname']}</option>
+							{/loop}		        
+			        </select><br />
+			所属类型：<select name="tid">
+							{loop $t_arr $type}
+								{if $type['tid'] == $cinfo['tid']}
+									{eval $selected = 'selected = "selected"'}
+								{else}
+									{eval $selected = ''}
+								{/if}
+								<option value="{$type['tid']}" {$selected}>{$type['tname']}</option>
+							{/loop}		        
+			        </select><br />
+			社团简介：<textarea name="info">{$cinfo['information']}</textarea><br />
+			附加信息：<textarea name="others">{$cinfo['others']}</textarea><br />
+			<input type="submit" value="确认修改" />
+		</form>
+	</div>
+{/if}
+{if $op == 'change'}
+	<div class="main_header">
+		<div id="icon-center" class="icon32"><br /></div>
+		<h2>修改社团</h2>
+	</div>
+	<div class="content">
+		<span class="response">修改成功!</span>
+		<h2><a href="admincp.php?ac=corpora&op=showinfo&cid={$cid}">查看</a></h4>
+		<h2><a href="admincp.php?ac=corpora&op=display">返回</a></h4>
+	</div>
+{/if}
+{if $op == 'del'}
+	<div class="main_header">
+		<div id="icon-center" class="icon32"><br /></div>
+		<h2>注销社团</h2>
+	</div>
+	<div class="content">
+	</div>
+{/if}
