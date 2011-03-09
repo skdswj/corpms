@@ -4,7 +4,7 @@
 if (!defined('IN_CORP')) {
 	exit('Access Denied');
 }
-
+header('Content-Type:text/html;charset=utf-8');
 if($op == 'default' || $op == 'list'){
 	$count_sql = 'SELECT COUNT(*) FROM '.tname('files');
 	$sql = 'SELECT * FROM '.tname('files').' ORDER BY `date` DESC {LMT)';

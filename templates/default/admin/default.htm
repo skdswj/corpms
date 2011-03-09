@@ -63,6 +63,9 @@ $(document).ready(function() {
 		<!-- 普通会员 -->
 		<li id="urecommend" class="menu"><a href="admincp.php?ac=user&op=showinfo&uid={echo getcookie('uid')}">个人信息</a></li>
 	{/if}
+	{if $gid == 3 || $gid == 2}
+		<li id="urecommend" class="menu"><a href="admincp.php?ac=corpora">查看社团信息</a></li>
+	{/if}
 	{if $gid <= 2}
 		<!-- 社团负责人 -->
 	{/if}

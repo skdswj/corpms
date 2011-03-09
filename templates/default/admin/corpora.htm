@@ -4,17 +4,19 @@
 	<h2>社团管理</h2>
 </div>
 <div class="content">
-	<h3><a href="admincp.php?ac=corpora&op=show_add">添加社团</a></h3>	
+	{if $gid < 2}<h3><a href="admincp.php?ac=corpora&op=show_add">添加社团</a></h3>{/if}<!-- 是否管理员 -->	
 	<table border="1" >
-		<tr><td>ID</td><td>社团名称</td><td>学院</td><td colspan="3">操作</td></tr>
+		<tr><td>ID</td><td>社团名称</td><td>学院</td>{if $gid < 2}<td colspan="3">操作</td></tr>{/if}	<!-- 是否管理员 -->
 		{loop $corp_arr $corp}
 			<tr>
 				<td>{$corp['cid']}</td>
 				<td><a href="admincp.php?ac=corpora&op=showinfo&cid={$corp['cid']}" >{$corp['cname']}</a></td>
 				<td>{$corp['coname']}</td>
+				{if $gid < 2}<!-- 是否管理员 -->
 				<td><a href="admincp.php?ac=corpora&op=show_change&cid={$corp['cid']}" >修改</a></td>
 				<td><a href="admincp.php?ac=corpora&op=add_info&cid={$corp['cid']}" >添加附加信息</a></td>
 				<td><a href="admincp.php?ac=corpora&op=del&cid={$corp['cid']}" >注销</a></td>
+				{/if}	
 			</tr>
 		{/loop}
 	</table>
@@ -37,7 +39,7 @@
 </div>
 <div class="content">
 	<table border="1" >
-		<tr><td>ID</td><td>{$cinfo['cid']}</td></tr>
+		<tr><td>编号</td><td>{$cinfo['cid']}</td></tr>
 		<tr><td>社团名称</td><td>{$cinfo['cname']}</td></tr>
 		<tr><td>学院</td><td>{$cinfo['coname']}</td></tr>
 		<tr><td>分类</td><td>{$cinfo['tname']}</td></tr>
@@ -45,8 +47,12 @@
 		<tr><td>会员</td><td>{$cinfo['curnum']}/{$cinfo['maxnum']}</td></tr>
 		<tr><td>社团简介</td><td>{$cinfo['information']}</td></tr>
 		<tr><td>附加信息</td><td>{$cinfo['others']}</td></tr>
+		{if $gid < 2}<!-- 是否管理员 -->
 		<tr><td><a href="admincp.php?ac=corpora&op=show_change&cid={$cinfo['cid']}" >修改</a></td>
 		<td><a href="admincp.php?ac=corpora&op=del&cid={$cinfo['cid']}" >注销</a></td></tr>
+		{else}
+		<tr><td>&nbsp;</td><td><a href="admincp?ac=corpora&op=apply&cid={$cinfo['cid']}">申请加入</a></td></tr>
+		{/if}
 	</table>
 </div>
 {/if}

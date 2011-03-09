@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.7deb2build0.10.10.1
+-- version 3.3.7deb5build0.10.10.1
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2011 年 03 月 07 日 15:42
+-- 生成日期: 2011 年 03 月 09 日 20:59
 -- 服务器版本: 5.1.49
--- PHP 版本: 5.3.3-1ubuntu9.1
+-- PHP 版本: 5.3.3-1ubuntu9.3
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -65,12 +65,8 @@ CREATE TABLE IF NOT EXISTS `corp_corporation` (
 --
 
 INSERT INTO `corp_corporation` (`cid`, `cname`, `coid`, `dues`, `tid`, `information`, `others`, `maxnum`, `curnum`) VALUES
-('QD-05-09', '静语计算机协会', 1, 20, 1, '静语计算机协会', '静语计算机协会', 500, 300),
-('QD-12-65', '街舞', 2, 100, 3, '街舞啊', '啊哈哈哈', 200, 0),
-('QD-04-05', '轮滑', 2, 3000, 2, '斯蒂芬', '我去谔谔', 200, 0),
-('QD-12-34', '李阳疯狂英语', 3, 150, 2, '李阳啊', '风啊', 500, 0),
-('1232131', '123', 1, 1231, 1, '12312', '3123', 12312, 0),
-('31313', '12211', 1, 123, 1, '123', '123', 123, 0);
+('QD-05-09', '静语计算机协会', 1, 20, 1, '静语计算机协会', '静语计算机协会', 300, 0),
+('QD-11-22', '网球社团', 1, 1, 1, '网球', '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -96,6 +92,31 @@ INSERT INTO `corp_duty` (`did`, `dname`) VALUES
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `corp_files`
+--
+
+CREATE TABLE IF NOT EXISTS `corp_files` (
+  `fid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `description` varchar(100) NOT NULL,
+  `originalname` varchar(100) NOT NULL,
+  `savedir` varchar(100) NOT NULL,
+  PRIMARY KEY (`fid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- 转存表中的数据 `corp_files`
+--
+
+INSERT INTO `corp_files` (`fid`, `date`, `description`, `originalname`, `savedir`) VALUES
+(1, '2011-03-04 21:35:06', 'progit中文教程', 'progit.zh.pdf', 'upfiles/progit.zh.pdf137.pdf'),
+(2, '2011-03-04 21:42:21', '', 'progit.zh.pdf', 'upfiles/progit.zh.pdf382.pdf'),
+(3, '2011-03-04 21:43:00', '', 'progit.zh.pdf', 'upfiles/progit.zh.pdf102.pdf'),
+(4, '2011-03-04 21:56:36', '考研资料', '统计.ods', 'upfiles/统计.ods137.ods');
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `corp_group`
 --
 
@@ -110,10 +131,33 @@ CREATE TABLE IF NOT EXISTS `corp_group` (
 --
 
 INSERT INTO `corp_group` (`gid`, `gname`) VALUES
-(0, '超级管理员'),
-(1, '管理员'),
+(4, '超级管理员'),
+(1, '普通会员'),
 (2, '社团负责人'),
-(3, '普通会员');
+(3, '管理员');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `corp_log`
+--
+
+CREATE TABLE IF NOT EXISTS `corp_log` (
+  `lid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `uid` mediumint(9) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `motion` varchar(50) NOT NULL,
+  PRIMARY KEY (`lid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- 转存表中的数据 `corp_log`
+--
+
+INSERT INTO `corp_log` (`lid`, `date`, `uid`, `username`, `motion`) VALUES
+(1, '2011-03-05 15:55:15', 6, 'admin', '修改qqqq(学号1)的信息'),
+(2, '2011-03-05 16:05:18', 6, 'admin', '修改qqqq(学号1)的信息');
 
 -- --------------------------------------------------------
 
@@ -179,17 +223,17 @@ CREATE TABLE IF NOT EXISTS `corp_user` (
   `phone` char(11) NOT NULL COMMENT '联系方式',
   `gid` tinyint(1) unsigned NOT NULL COMMENT '用户类型',
   PRIMARY KEY (`uid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户信息' AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户信息' AUTO_INCREMENT=7 ;
 
 --
 -- 转存表中的数据 `corp_user`
 --
 
 INSERT INTO `corp_user` (`uid`, `username`, `sex`, `number`, `password`, `coid`, `mid`, `class`, `phone`, `gid`) VALUES
-(1, 'admin', 1, '0', 'b605e86d02eef8bfd0646f6a704c17c9', 0, 0, '0', '0', 4),
+(5, 'admin1', 0, '', 'b605e86d02eef8bfd0646f6a704c17c9', 0, 0, '', '', 0),
 (2, 'sdf', 1, '0901051722', '99c6cf36db8253371f1468ae0d30d2a2', 1, 1, '0906', '15054218192', 4),
-(4, 'qqqq', 1, '1', 'b605e86d02eef8bfd0646f6a704c17c9', 1, 1, '0906', '16777215', 1),
-(0, 'test', 1, '0901051715', '134', 1, 1, '0906', '12354678', 3);
+(4, 'qqqq', 1, '1', 'b605e86d02eef8bfd0646f6a704c17c9', 1, 1, '0906', '16777215', 3),
+(6, 'admin', 1, '1', 'b605e86d02eef8bfd0646f6a704c17c9', 1, 1, '1', '158', 0);
 
 -- --------------------------------------------------------
 
@@ -209,4 +253,6 @@ CREATE TABLE IF NOT EXISTS `corp_user_corporation` (
 --
 
 INSERT INTO `corp_user_corporation` (`uid`, `cid`, `did`) VALUES
-(2, 'QD-05-09', 1);
+(2, 'QD-05-09', 1),
+(6, 'QD-11-22', 2),
+(6, 'QD-05-09', 1);

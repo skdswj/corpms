@@ -7,16 +7,16 @@
 		$count_sql = 'SELECT COUNT(*) FROM '.tname('user');
 		if($op == 'divide' && !empty($_POST['num'])){
 			if($_POST['num'] == 'none'){
-				$sub_sql = 'SELECT DISTINCT `uid` FROM '.	tname('user_corporation');
+				$sub_sql = 'SELECT DISTINCT `uid` FROM '.	tname('user_corporation').'  WHERE `is_accept`=1';
 				$msg = '未选社团的会员';
 			}else if($_POST['num'] == 'one'){
-				$sub_sql = 'SELECT `uid` FROM '.	tname('user_corporation').' GROUP BY `uid` HAVING COUNT(*) = 1';
+				$sub_sql = 'SELECT `uid` FROM '.	tname('user_corporation').' WHERE `is_accept`=1 GROUP BY `uid` HAVING COUNT(*) = 1';
 				$msg = '选一个社团的会员';
 			}else if($_POST['num'] == 'two'){
-				$sub_sql = 'SELECT `uid` FROM '.	tname('user_corporation').' GROUP BY `uid` HAVING COUNT(*) = 2';
+				$sub_sql = 'SELECT `uid` FROM '.	tname('user_corporation').' WHERE `is_accept`=1 GROUP BY `uid` HAVING COUNT(*) = 2';
 				$msg = '选两个社团的会员';
 			}else{ 
-				$sub_sql = 'SELECT `uid` FROM '.	tname('user_corporation').' GROUP BY `uid` HAVING COUNT(*) > 2';
+				$sub_sql = 'SELECT `uid` FROM '.	tname('user_corporation').' WHERE `is_accept`=1 GROUP BY `uid` HAVING COUNT(*) > 2';
 				$msg = '选大于两个社团的会员';
 			}
 			if($_POST['num'] == 'none')
