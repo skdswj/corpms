@@ -44,6 +44,7 @@ if(!defined('IN_CORP')) {
 33.page_division ($count_sql, $sql, $page, &$page_arr, $items_per_page=20)
 34.build_selection($arr,$name)
 35.run_log($uid,$username,$str)
+36.permit($need_gid) 需要指定gid以上权限才允许使用此功能
 ////////////////////////////////////////////////////////////*/
 
 /** 
@@ -630,6 +631,13 @@ function run_log($uid,$username,$motion){
 	global $db;
 	$sql = 'INSERT INTO '.tname('log')." VALUES(NULL,now(),'$uid','$username','$motion')";
 	return $db->query($sql);
+}
+function permit($need_gid){
+	global $gid, $uid;
+	if (!(($gid <= $need_gid) && $uid)){
+		include_once template("default");
+		exit("权限不足 <a href='javascript:history.go(-1)'>");
+	}
 }
 //---------------------------------以上是CORP专属用函数------------------------------
 ?>
