@@ -5,7 +5,7 @@
 	$dbtype = 'mysql';	// 数据库类型
 	$dbhost = 'localhost';	// 数据库地址
 	$dbuser = 'root';	// 数据库用户名
-	$dbpw = '1111';		// 数据库密码
+	$dbpw = '';		// 数据库密码
 	$dbname = 'corpms';		// 数据库名
 	$tablepre = 'corp_';	// 表前缀
 	$dbcharset = 'utf8';	// MySQL 字符集, 可选 'gbk', 'big5', 'utf8', 'latin1', 留空为按照默认字符集设定

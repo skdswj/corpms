@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.7deb5build0.10.10.1
+-- version 3.3.9
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2011 年 03 月 09 日 20:59
--- 服务器版本: 5.1.49
--- PHP 版本: 5.3.3-1ubuntu9.3
+-- 生成日期: 2011 年 04 月 11 日 09:45
+-- 服务器版本: 5.5.8
+-- PHP 版本: 5.3.5
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -131,10 +131,10 @@ CREATE TABLE IF NOT EXISTS `corp_group` (
 --
 
 INSERT INTO `corp_group` (`gid`, `gname`) VALUES
-(4, '超级管理员'),
-(1, '普通会员'),
+(0, '超级管理员'),
+(3, '普通会员'),
 (2, '社团负责人'),
-(3, '管理员');
+(1, '管理员');
 
 -- --------------------------------------------------------
 
@@ -245,6 +245,7 @@ CREATE TABLE IF NOT EXISTS `corp_user_corporation` (
   `uid` mediumint(8) unsigned NOT NULL COMMENT '用户id',
   `cid` varchar(8) NOT NULL COMMENT '社团id',
   `did` tinyint(2) NOT NULL COMMENT '职务',
+  `is_accept` tinyint(1) NOT NULL COMMENT '是否通过加入社团',
   PRIMARY KEY (`uid`,`cid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户社团对照表';
 
@@ -252,7 +253,7 @@ CREATE TABLE IF NOT EXISTS `corp_user_corporation` (
 -- 转存表中的数据 `corp_user_corporation`
 --
 
-INSERT INTO `corp_user_corporation` (`uid`, `cid`, `did`) VALUES
-(2, 'QD-05-09', 1),
-(6, 'QD-11-22', 2),
-(6, 'QD-05-09', 1);
+INSERT INTO `corp_user_corporation` (`uid`, `cid`, `did`, `is_accept`) VALUES
+(2, 'QD-05-09', 1, 0),
+(6, 'QD-11-22', 2, 0),
+(6, 'QD-05-09', 1, 0);
