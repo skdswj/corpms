@@ -1,0 +1,50 @@
+{if $op == 'default' || $op == 'display'}
+<div class="main_header">
+	<div id="icon-center" class="icon32"><br /></div>
+	<h2>留言管理</h2>
+</div>
+{if $gid <= 3}
+<div class="content">
+	<table border="1" >
+		<tr><td>姓名</td><td>标题</td><td>发表时间</td><td colspan="1">操作</td></tr>
+		{loop $note_arr $note}
+			<tr>
+				<td><a href="admincp.php?ac=user&op=showinfo&uid={$note[uid]}">{$note['username']}</a></td>
+				<td><a href="admincp.php?ac=note&op=showinfo&nid={$note[nid]}" >{$note['title']}</a></td>
+				<td>{$note['dateline']}</td>
+				<td><a href="admincp.php?ac=note&op=del&nid={$note[nid]}" >删除</a></td>
+			</tr>
+		{/loop}
+	</table>
+		<!-- 页码显示段 -->
+	{if $page > $page_arr[0]}<a href="admincp.php?ac=note&page={echo $page-1}">上一页</a>&nbsp;{/if}
+	{loop $page_arr $no}
+		{if $no != $page}
+			&nbsp;<a href="admincp.php?ac=note&page={$no}">{$no}</a>
+		{else}
+			&nbsp;{$no}
+		{/if}
+	{/loop}
+	{if $page < $no}&nbsp;<a href="admincp.php?ac=note&page={$page+1}">下一页</a>{/if}
+</div>
+{/if}
+<form action="admincp.php?ac=note&op=new" method="post">
+	标题:<input type="text" name="title" /> <br />
+	内容:<textarea name="content"></textarea> <br />
+	<input type="submit" value="发表留言"/>
+</form>
+{/if}
+{if $op == 'showinfo'}
+<div class="main_header">
+	<div id="icon-center" class="icon32"><br /></div>
+	<h2>留言信息</h2>
+</div>
+<div class="content">
+	<table border="1" >
+		<tr><td>姓名</td><td>{$noteinfo['username']}</td></tr>
+		<tr><td>nid</td><td>{$_GET['nid']}</td></tr>
+		<tr><td>标题</td><td>{$noteinfo['title']}</td></tr>
+		<tr><td>内容</td><td>{eval echo(comstrag_tags($noteinfo['content']))}</td></tr>
+	</table>
+</div>
+{/if}
