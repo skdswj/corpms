@@ -88,4 +88,8 @@
 		header("HTTP/1.1 301 Moved Permanently");
 		header("Location: admincp.php?ac=corpora&op=display");
 	}
+	if($op == 'add_info')
+	{
+		
+	}
 ?>
