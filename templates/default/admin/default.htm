@@ -59,17 +59,17 @@ $(document).ready(function() {
 <ul class="admin_menu">
 	<li id="center" class="menu"><a href="admincp.php">控制中心</a></li>
 	<li class="menu-separator"><a class="separator" href="?unfoldmenu=1"><br /></a></li>
-	{if $gid <= 3}
+	{if $gid <= 4}
 		<!-- 普通会员 -->
 		<li id="urecommend" class="menu"><a href="admincp.php?ac=user&op=showinfo&uid={echo getcookie('uid')}">个人信息</a></li>
 	{/if}
-	{if $gid == 3 || $gid == 2}
+	{if $gid == 4 || $gid == 3}
 		<li id="urecommend" class="menu"><a href="admincp.php?ac=corpora">查看社团信息</a></li>
 	{/if}
-	{if $gid <= 2}
+	{if $gid <= 3}
 		<!-- 社团负责人 -->
 	{/if}
-	{if $gid <= 1}
+	{if $gid <= 2}
 		<!-- 管理员 --> 
 		<li id="urecommend" class="menu"><a href="admincp.php?ac=corpora">社团管理</a></li>
 		<li id="urecommend" class="menu"><a href="admincp.php?ac=user">会员管理</a></li>
@@ -80,16 +80,16 @@ $(document).ready(function() {
 		<li id="urecommend" class="menu"><a href="admincp.php?ac=log">日志查看</a></li>
 		<li id="urecommend" class="menu"><a href="admincp.php?ac=multicor">一人多社团管理</a></li>
 	{/if}	
-	{if $gid == 0}
+	{if $gid == 1}
 		<!-- 超级管理员 -->
 		<li id="urecommend" class="menu"><a href="admincp.php?ac=corptype">社团分类</a></li>
 		<li id="urecommend" class="menu"><a href="admincp.php?ac=adminmana">管理员管理</a></li>
 	{/if}
 	<div class="footer">Copyright &copy; 2011<br />All Rights Reserved</div>
 </ul>
-{if $_GET[msg]}
-	<div id="msg">{$_GET[msg]}</div>
+{if !empty($_GET['msg'])}
+	<div id="msg">{$_GET['msg']}</div>
 {/if}
-{if $_GET[back]}
+{if !empty($_GET['back'])}
 	<div id="back"><a href='javascript:history.go(-1)'>返回</a></div>
 {/if}
