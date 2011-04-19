@@ -1,0 +1,56 @@
+{if $op == 'default' || $op == 'display'}
+<div class="main_header">
+	<div id="icon-center" class="icon32"><br /></div>
+	<h2>公告管理</h2>
+</div>
+{if $gid <= 3}
+<div class="content">
+	<table border="1" >
+		<tr><td>姓名</td><td>标题</td><td>发表时间</td><td colspan="2">操作</td></tr>
+		{loop $pubnotice_arr $pubnotice}
+			<tr>
+				<td><a href="admincp.php?ac=user&op=showinfo&uid={$pubnotice[uid]}">{$pubnotice['username']}</a></td>
+				<td><a href="admincp.php?ac=pubnotice&op=showinfo&nid={$pubnotice[nid]}" >{$pubnotice['title']}</a></td>
+				<td>{$pubnotice['dateline']}</td>
+				<td><a href="admincp.php?ac=pubnotice&op=show_change&nid={$pubnotice[nid]}" >修改</a></td>
+				<td><a href="admincp.php?ac=pubnotice&op=del&nid={$pubnotice[nid]}" >删除</a></td>
+			</tr>
+		{/loop}
+	</table>
+		<!-- 页码显示段 -->
+	{if $page > $page_arr[0]}<a href="admincp.php?ac=pubnotice&page={echo $page-1}">上一页</a>&nbsp;{/if}
+	{loop $page_arr $no}
+		{if $no != $page}
+			&nbsp;<a href="admincp.php?ac=pubnotice&page={$no}">{$no}</a>
+		{else}
+			&nbsp;{$no}
+		{/if}
+	{/loop}
+	{if $page < $no}&nbsp;<a href="admincp.php?ac=pubnotice&page={$page+1}">下一页</a>{/if}
+</div>
+{/if}
+<form action="admincp.php?ac=pubnotice&op=new" method="post">
+	标题:<input type="text" name="title" /> <input type="submit" value="发表公告"/><br />
+	内容:{eval echo createEditor("content");} 
+</form>
+{/if}
+{if $op == 'showinfo'}
+<div class="main_header">
+	<div id="icon-center" class="icon32"><br /></div>
+	<h2>留言信息</h2>
+</div>
+<div class="content">
+	<table border="1" >
+		<tr><td>姓名</td><td>{$pubnoticeinfo['username']}</td></tr>
+		<tr><td>nid</td><td>{$_GET['nid']}</td></tr>
+		<tr><td>标题</td><td>{$pubnoticeinfo['title']}</td></tr>
+		<tr><td>内容</td><td>{eval echo($pubnoticeinfo['content'])}</td></tr>
+	</table>
+</div>
+{/if}
+{if $op == 'show_change'}
+<form action="admincp.php?ac=pubnotice&op=change&nid={$pubnoticeinfo[nid]}" method="post">
+	标题:<input type="text" name="title" value="{$pubnoticeinfo[title]}" /> <input type="submit" value="修改公告"/><br />
+	内容:{eval echo createEditor("content", $pubnoticeinfo['content']);} 
+</form>
+{/if}

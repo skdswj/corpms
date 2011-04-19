@@ -1,0 +1,52 @@
+{if $op == 'default' || $op == 'display'}
+<div class="main_header">
+	<div id="icon-center" class="icon32"><br /></div>
+	<h2>管理员管理</h2>
+</div>
+<div class="content">
+	<table border="1" >
+		<tr><td>ID</td><td>姓名</td><td>学号</td><td>职位</td><td colspan="4">修改为</td><td>社团</td></tr>
+		{loop $user_arr $user}
+			<tr>
+				<td>{$user['uid']}</td>
+				<td><a href="admincp.php?ac=user&op=showinfo&uid={$user['uid']}" >{$user['username']}</a></td>
+				<td>{$user['number']}</td>
+				<td>{$user['gname']}</td>
+				
+				<td><a href="admincp.php?ac=adminmana&op=change&uid={$user['uid']}&gid=1" >超级管理员</a></td>
+				<td><a href="admincp.php?ac=adminmana&op=change&uid={$user['uid']}&gid=2" >管理员</a></td>
+				<td><a href="admincp.php?ac=adminmana&op=change&uid={$user['uid']}&gid=3" >社团负责人</a></td>
+				<td><a href="admincp.php?ac=adminmana&op=change&uid={$user['uid']}&gid=4" >普通用户</a></td>
+				<td>{if $user['gid'] == 3}
+				<form action="admincp.php" method="get">
+					<input type="hidden" name="ac" value="adminmana" />
+					<input type="hidden" name="op" value="moderator" />
+					<input type="hidden" name="uid" value="{$user['uid']}" />
+					<select name="cid">
+					{loop $corporations $corporation}
+					 selected="selected">
+					<option value="{$corporation['cid']}"{if $corporation['cid']==$user['cid']} selected="selected"{/if}>{$corporation['cname']}</option>
+					{/loop}
+					</select>
+					<input type="submit" value="修改" />
+				</form>
+				{/if}
+				</td>
+			</tr>
+		{/loop}
+	</table>
+		<!-- 页码显示段 -->
+	{if $page > $page_arr[0]}<a href="admincp.php?ac=adminmana&page={echo $page-1}">上一页</a>&nbsp;{/if}
+	{loop $page_arr $no}
+		{if $no != $page}
+			&nbsp;<a href="admincp.php?ac=adminmana&page={$no}">{$no}</a>
+		{else}
+			&nbsp;{$no}
+		{/if}
+	{/loop}
+	{if $page < $no}&nbsp;<a href="admincp.php?ac=adminmana&page={$page+1}">下一页</a>{/if}
+</div>
+	<form action="admincp.php" method="get">
+	<input type="hidden" name="ac" value="adminmana" />
+	<input type="hidden" name="op" value="moderator" />
+{/if}

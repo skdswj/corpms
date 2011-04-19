@@ -4,4 +4,11 @@
 </div>
 <div class="content">
 	欢迎来到管理后台，请在左侧菜单中选择你所要进行的操作！
+	<br /><br />
+	<h3>近期公告</h3>
+	{loop $pubnotices $pubnotice}
+		<h4>{$pubnotice[title]}</h4>
+		{$pubnotice[content]}<br />
+		{$pubnotice[dateline]}<br /><br />
+	{/loop}
 </div>
