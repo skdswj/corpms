@@ -31,6 +31,32 @@
 		$user_arr = page_division($count_sql, $sql, $page, $page_arr);
 		$op = 'display';
 	}
+	if($op == 'show_add'){
+		$grsql = 'SELECT * FROM '.tname('group');
+		$gr_arr = $db->fetch_all($grsql);
+		$colsql = 'SELECT * FROM '.tname('college');
+		$col_arr = $db->fetch_all($colsql);
+		$msql = 'SELECT * FROM '.tname('major');
+		$m_arr = $db->fetch_all($msql);
+	}
+	if($op == 'add'){
+		$username = $_POST['username'];
+		$sex = $_POST['sex'];
+		$number = $_POST['number'];
+		$coid = $_POST['coid'];
+		$mid = $_POST['mid'];
+		$class = $_POST['class'];
+		$phone = $_POST['phone'];
+		$gid = $_POST['gid'];
+		$password = encrypt($number);
+		
+		$sql = "INSERT INTO ".tname('user')." (`username`,`sex`,`number`,`password`,`coid`,`mid`,`class`,`phone`,`gid`) VALUES ('$username','$sex','$number','$password','$coid','$mid','$class','$phone','$gid')";
+		$db->query($sql);
+		$uid = $db->insert_id();
+		//显示信息		
+		header("HTTP/1.1 301 Moved Permanently");
+		header("Location: admincp.php?ac=user&op=showinfo&uid={$uid}");			
+	}
 	if($op == 'showinfo'){
 		//显示会员信息
 		$sql = 'SELECT * FROM '.tname('user').','.tname('college').','.tname('group').','.tname('major')

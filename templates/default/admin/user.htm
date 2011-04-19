@@ -4,6 +4,7 @@
 	<h2>会员管理</h2>
 </div>
 <div class="content">
+	<a href = "admincp.php?ac=user&op=show_add">添加新会员</a><br />
 	当前显示报社团数:<font color=red>{$msg}</font>
 	<form action="admincp.php?ac=user&op=divide" method="post">查询报多个社团人员名单:<select name="num"><option value="none">未注册社团</option><option value="one">1个社团</option><option value="two">2个社团</option><option value="more_than_two">大于2个社团</option></select><input type="submit" value="确定查询"/></form><br>
 	<table border="1" >
@@ -23,6 +24,35 @@
 	{/loop}
 	{if $page < $no}&nbsp;<a href="admincp.php?ac=user&page={$page+1}">下一页</a>{/if}
 </div>
+{/if}
+{if $op == 'show_add'}
+<div class="main_header">
+	<div id="icon-center" class="icon32"><br /></div>
+	<h2>添加新会员</h2>
+</div>
+<div class="content">
+	<form action="admincp.php?ac=user&op=add" method="post">
+		姓名：<input type="text" name="username" /><br />
+		学号：<input type="text" name="number" /><br />
+		性别：<input type="radio" name="sex" value="1" />男<input type="radio" name="sex" value="0" />女<br />
+		学院：<select name="coid">
+					{loop $col_arr $col}
+						<option value="{$col['coid']}" >{$col['coname']}</option>
+					{/loop}
+			  </select><br />
+		专业：<select name="mid">
+					{loop $m_arr $m}
+						<option value="{$m['mid']}" >{$m['mname']}</option>
+					{/loop}
+			  </select><br />
+		班级：<input type="text" name="class" /><br />
+		联系方式：<input type="text" name="phone" /><br />
+		用户类型：{loop $gr_arr $gr}
+				<input type="radio" name="gid" value="{$gr['gid']}" />{$gr['gname']}
+           		{/loop}
+		<br /><input type="submit" value="添加"/>
+	</form>
+</div>	
 {/if}
 {if $op == 'showinfo'}
 <div class="main_header">
