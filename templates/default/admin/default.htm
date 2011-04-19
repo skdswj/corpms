@@ -87,9 +87,9 @@ $(document).ready(function() {
 	{/if}
 	<div class="footer">Copyright &copy; 2011<br />All Rights Reserved</div>
 </ul>
-{if $_GET[msg]}
-	<div id="msg">{$_GET[msg]}</div>
+{if $_GET['msg']}
+	<div id="msg">{$_GET['msg']}</div>
 {/if}
-{if $_GET[back]}
+{if $_GET['back']}
 	<div id="back"><a href='javascript:history.go(-1)'>返回</a></div>
 {/if}

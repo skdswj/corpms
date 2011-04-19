@@ -35,6 +35,8 @@
 		$maxnum = $_POST['maxnum'];
 		$sql = "INSERT INTO ".tname('corporation')."(cid,cname,coid,dues,tid,information,others,maxnum,curnum) VALUES ('$cid','$cname','$coid','$dues','$tid','$information','$others','$maxnum','0')";	
 		$db->query($sql);
+		header("HTTP/1.1 301 Moved Permanently");
+		header("Location: admincp.php?ac=corpora&op=showinfo&cid=$cid");	
 	}
 	if($op == 'show_change'){
 		//显示更改社团信息
@@ -59,12 +61,14 @@
 		$curnum = $_POST['curnum'];
 		$sql = "UPDATE ".tname('corporation')." SET cname='$cname',coid='$coid',dues='$dues',tid='$tid',information='$information',others='$others',maxnum='$maxnum',curnum='$curnum' WHERE cid = '$cid'";
 		$db->query($sql);
+		header("HTTP/1.1 301 Moved Permanently");
+		header("Location: admincp.php?ac=corpora&op=showinfo&cid=$cid");	
 	}
 	if($op == 'del'){
 		//注销社团
-		$sql = 'DELETE FROM '.tname('corporation').' WHERE `cid` = '.$_GET['cid'].' LIMIT 1';
+		$sql = 'DELETE FROM '.tname('corporation').' WHERE `cid` = "'.$_GET['cid'].'" LIMIT 1';
 		$db->query($sql);
-		$usql = 'DELETE FROM '.tname('user_corporation').' WHERE `cid` = '.$_GET['cid'];
+		$usql = 'DELETE FROM '.tname('user_corporation').' WHERE `cid` = "'.$_GET['cid'].'"';
 		$db->query($usql);
 		header("HTTP/1.1 301 Moved Permanently");
 		header("Location: admincp.php?ac=corpora&op=display");
@@ -77,7 +81,7 @@
 			header('Content-Type:text/html;charset=utf-8');
 			echo "<script type=\"text/javascript\">alert('您申请的社团数量过多，请到校社联继续申请');location.href='admincp.php?ac=corpora';</script>";
 		}
-		$sql = 'SELECT COUNT(*) FROM '.tname('user_corporation').' WHERE `uid`='.$uid.' AND cid='.$_GET['cid'];
+		$sql = 'SELECT COUNT(*) FROM '.tname('user_corporation').' WHERE `uid`='.$uid.' AND cid="'.$_GET['cid'].'"';
 		if($db->query($sql) > 0){
 			//已经申请过
 			header('Content-Type:text/html;charset=utf-8');
@@ -90,6 +94,21 @@
 	}
 	if($op == 'add_info')
 	{
-		
+		if(!$_POST)
+		{
+			$cid = $_GET['cid'];
+			$sql = 'SELECT `others` FROM '.tname('corporation')." WHERE `cid`='$cid'";
+			$c_arr = $db->fetch_first($sql);
+			$others = $c_arr['others'];
+		}
+		else
+		{
+			$others = $_POST['others'];
+			$cid = $_GET['cid'];
+			$sql = 'UPDATE '.tname('corporation')." SET `others`='$others' WHERE cid='$cid'";
+			$db->query($sql);
+			header("HTTP/1.1 301 Moved Permanently");
+			header("Location: admincp.php?ac=corpora&op=showinfo&cid=$cid");	
+		}		
 	}
 ?>

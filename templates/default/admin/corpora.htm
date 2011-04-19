@@ -14,7 +14,7 @@
 				<td>{$corp['coname']}</td>
 				{if $gid < 2}<!-- 是否管理员 -->
 				<td><a href="admincp.php?ac=corpora&op=show_change&cid={$corp['cid']}" >修改</a></td>
-				<td><a href="admincp.php?ac=corpora&op=add_info&cid={$corp['cid']}" >添加附加信息</a></td>
+				<td><a href="admincp.php?ac=corpora&op=add_info&cid={$corp['cid']}" >添加/修改附加信息</a></td>
 				<td><a href="admincp.php?ac=corpora&op=del&cid={$corp['cid']}" >注销</a></td>
 				{/if}	
 			</tr>
@@ -83,17 +83,6 @@
 	</form>
 </div>
 {/if}
-{if $op == 'add'}
-	<div class="main_header">
-		<div id="icon-center" class="icon32"><br /></div>
-		<h2>添加社团</h2>
-	</div>
-	<div class="content">	
-		<span class="response">添加成功!</span>
-		<h2><a href="admincp.php?ac=corpora&op=showinfo&cid={$cid}">查看</a></h4>
-		<h2><a href="admincp.php?ac=corpora&op=display">返回</a></h4>
-	</div>
-{/if}
 {if $op == 'show_change'}
 	<div class="main_header">
 		<div id="icon-center" class="icon32"><br /></div>
@@ -132,22 +121,15 @@
 		</form>
 	</div>
 {/if}
-{if $op == 'change'}
+{if $op == 'add_info'}
 	<div class="main_header">
 		<div id="icon-center" class="icon32"><br /></div>
-		<h2>修改社团</h2>
+		<h2>添加/修改社团附加信息</h2>
 	</div>
 	<div class="content">
-		<span class="response">修改成功!</span>
-		<h2><a href="admincp.php?ac=corpora&op=showinfo&cid={$cid}">查看</a></h4>
-		<h2><a href="admincp.php?ac=corpora&op=display">返回</a></h4>
-	</div>
-{/if}
-{if $op == 'del'}
-	<div class="main_header">
-		<div id="icon-center" class="icon32"><br /></div>
-		<h2>注销社团</h2>
-	</div>
-	<div class="content">
+		<form action="admincp.php?ac=corpora&op=add_info&cid={$cid}" method="post">
+			<textarea name="others">{$others}</textarea>
+			<input type="submit" value="添加">		
+		</form>
 	</div>
 {/if}
