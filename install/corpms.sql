@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2011 年 04 月 11 日 09:45
+-- 生成日期: 2011 年 04 月 20 日 09:39
 -- 服务器版本: 5.5.8
 -- PHP 版本: 5.3.5
 
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `corp_corporation` (
 
 INSERT INTO `corp_corporation` (`cid`, `cname`, `coid`, `dues`, `tid`, `information`, `others`, `maxnum`, `curnum`) VALUES
 ('QD-05-09', '静语计算机协会', 1, 20, 1, '静语计算机协会', '静语计算机协会', 300, 0),
-('QD-11-22', '网球社团', 1, 1, 1, '网球', '', 0, 0);
+('QD-11-22', '网球社团', 1, 14, 2, '网球', '11112323', 30, 20);
 
 -- --------------------------------------------------------
 
@@ -131,10 +131,10 @@ CREATE TABLE IF NOT EXISTS `corp_group` (
 --
 
 INSERT INTO `corp_group` (`gid`, `gname`) VALUES
-(0, '超级管理员'),
-(3, '普通会员'),
-(2, '社团负责人'),
-(1, '管理员');
+(1, '超级管理员'),
+(2, '管理员'),
+(3, '社团负责人'),
+(4, '普通会员');
 
 -- --------------------------------------------------------
 
@@ -184,6 +184,78 @@ INSERT INTO `corp_major` (`mid`, `mname`, `coid`) VALUES
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `corp_moderator`
+--
+
+CREATE TABLE IF NOT EXISTS `corp_moderator` (
+  `cid` char(8) NOT NULL COMMENT '社团编号',
+  `uid` mediumint(8) NOT NULL COMMENT 'uid',
+  PRIMARY KEY (`uid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='社团';
+
+--
+-- 转存表中的数据 `corp_moderator`
+--
+
+INSERT INTO `corp_moderator` (`cid`, `uid`) VALUES
+('QD-11-22', 4),
+('QD-11-22', 2);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `corp_note`
+--
+
+CREATE TABLE IF NOT EXISTS `corp_note` (
+  `nid` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` mediumint(8) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `dateline` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`nid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户信息' AUTO_INCREMENT=28 ;
+
+--
+-- 转存表中的数据 `corp_note`
+--
+
+INSERT INTO `corp_note` (`nid`, `uid`, `title`, `content`, `dateline`) VALUES
+(27, 6, 'test', 'test', '2011-04-15 07:40:38'),
+(22, 6, 'ss', 'dads', '2011-04-11 16:18:07'),
+(25, 6, 'teet', 'ss', '2011-04-11 16:40:24'),
+(26, 6, 'teet', 'ss', '2011-04-11 16:40:32');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `corp_pubnotice`
+--
+
+CREATE TABLE IF NOT EXISTS `corp_pubnotice` (
+  `nid` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` mediumint(8) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `dateline` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`nid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户信息' AUTO_INCREMENT=33 ;
+
+--
+-- 转存表中的数据 `corp_pubnotice`
+--
+
+INSERT INTO `corp_pubnotice` (`nid`, `uid`, `title`, `content`, `dateline`) VALUES
+(27, 6, 'test', '&nbsp;test', '2011-04-15 07:43:43'),
+(28, 6, 'test', '&nbsp;afdsadsa', '2011-04-15 07:43:51'),
+(29, 6, '', '', '2011-04-15 08:08:31'),
+(30, 6, '喵~', '<strong>&nbsp;咪</strong>~', '2011-04-15 08:12:44'),
+(31, 6, 'test', '&nbsp;test', '2011-04-15 08:13:10'),
+(32, 6, 'test', '<h3 style="color: red; ">&nbsp;a<strong>dvcvvvv</strong>&nbsp;a<strong>dv</strong><span style="font-family: 楷体_GB2312; "><strong>cvvvv</strong>&nbsp;a<strong>dvcv<br />\r\nvvv</strong></span>&nbsp;a<strong>dvcvvvv</strong>&nbsp;a<strong>dvcvvvv</strong>&nbsp;a<strong>dv</strong><span style="font-size: larger; "><strong>cvvv<br />\r\nv</strong>&nbsp;a<strong>dvcv</strong></span><strong>vvv</strong></h3>', '2011-04-19 15:58:30');
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `corp_type`
 --
 
@@ -223,17 +295,17 @@ CREATE TABLE IF NOT EXISTS `corp_user` (
   `phone` char(11) NOT NULL COMMENT '联系方式',
   `gid` tinyint(1) unsigned NOT NULL COMMENT '用户类型',
   PRIMARY KEY (`uid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户信息' AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户信息' AUTO_INCREMENT=12 ;
 
 --
 -- 转存表中的数据 `corp_user`
 --
 
 INSERT INTO `corp_user` (`uid`, `username`, `sex`, `number`, `password`, `coid`, `mid`, `class`, `phone`, `gid`) VALUES
-(5, 'admin1', 0, '', 'b605e86d02eef8bfd0646f6a704c17c9', 0, 0, '', '', 0),
-(2, 'sdf', 1, '0901051722', '99c6cf36db8253371f1468ae0d30d2a2', 1, 1, '0906', '15054218192', 4),
-(4, 'qqqq', 1, '1', 'b605e86d02eef8bfd0646f6a704c17c9', 1, 1, '0906', '16777215', 3),
-(6, 'admin', 1, '1', 'b605e86d02eef8bfd0646f6a704c17c9', 1, 1, '1', '158', 0);
+(10, 'admin', 1, '123456', 'b605e86d02eef8bfd0646f6a704c17c9', 1, 1, '2345', '12345678', 1),
+(11, 'jml', 1, '123456', 'b605e86d02eef8bfd0646f6a704c17c9', 1, 1, '5677', '23235345645', 2),
+(7, 'aaaa', 1, '123456', 'b605e86d02eef8bfd0646f6a704c17c9', 1, 1, '0906', '15054218192', 4),
+(8, 'qq', 0, '123456', 'b605e86d02eef8bfd0646f6a704c17c9', 2, 2, '1234', '1234567', 3);
 
 -- --------------------------------------------------------
 
@@ -253,7 +325,3 @@ CREATE TABLE IF NOT EXISTS `corp_user_corporation` (
 -- 转存表中的数据 `corp_user_corporation`
 --
 
-INSERT INTO `corp_user_corporation` (`uid`, `cid`, `did`, `is_accept`) VALUES
-(2, 'QD-05-09', 1, 0),
-(6, 'QD-11-22', 2, 0),
-(6, 'QD-05-09', 1, 0);
