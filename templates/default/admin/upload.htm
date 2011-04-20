@@ -3,7 +3,7 @@
 	<h2>社团信息</h2>
 </div>
 <div class="content">
-	{if $gid != 1}<a href="admincp.php?ac=upload&op=upload_do" >上传文件</a>{/if}
+	{if $gid <= 2}<a href="admincp.php?ac=upload&op=upload_do" >上传文件</a>{/if}
 	{if $op == 'default' || $op == 'list'}
 		<table border="1" >
 		<tr><td>文件编号</td><td>文件名</td><td>上传时间</td><td>文件说明</td><td colspan="2">操作</td></tr>

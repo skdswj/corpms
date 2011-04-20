@@ -58,7 +58,6 @@ $(document).ready(function() {
 </div>
 <ul class="admin_menu">
 	<li id="center" class="menu"><a href="admincp.php">控制中心</a></li>
-<<<<<<< HEAD
 	<li class="menu-separator"><a class="separator" href="?unfoldmenu=1"><br /></a></li>
 	{if $gid <= 4}
 		<!-- 普通会员 -->
@@ -85,33 +84,7 @@ $(document).ready(function() {
 		<!-- 超级管理员 -->
 		<li id="urecommend" class="menu"><a href="admincp.php?ac=corptype">社团分类</a></li>
 		<li id="urecommend" class="menu"><a href="admincp.php?ac=adminmana">管理员管理</a></li>
-=======
-	<li class="menu-separator"><a class="separator" href="?unfoldmenu=1"><br /></a></li>
-	{if $gid <= 4}
-		<!-- 普通会员 -->
-		<li id="urecommend" class="menu"><a href="admincp.php?ac=user&op=showinfo&uid={echo getcookie('uid')}">个人信息</a></li>
-	{/if}
-	{if $gid == 4 || $gid == 3}
-		<li id="urecommend" class="menu"><a href="admincp.php?ac=corpora">查看社团信息</a></li>
-	{/if}
-	{if $gid <= 3}
-		<!-- 社团负责人 -->
-	{/if}
-	{if $gid <= 2}
-		<!-- 管理员 --> 
-		<li id="urecommend" class="menu"><a href="admincp.php?ac=corpora">社团管理</a></li>
-		<li id="urecommend" class="menu"><a href="admincp.php?ac=user">会员管理</a></li>
-		<li id="urecommend" class="menu"><a href="admincp.php?ac=upload">上传资料</a></li>
-		<li id="urecommend" class="menu"><a href="admincp.php?ac=note">查看留言</a></li>
-		<li id="urecommend" class="menu"><a href="admincp.php?ac=pubnotice">近期公告</a></li>
-		<li id="urecommend" class="menu"><a href="admincp.php?ac=import">学生信息导入</a></li>
-		<li id="urecommend" class="menu"><a href="admincp.php?ac=log">日志查看</a></li>
-		<li id="urecommend" class="menu"><a href="admincp.php?ac=multicor">一人多社团管理</a></li>
-	{/if}	
-	{if $gid == 1}
-		<!-- 超级管理员 -->
-		<li id="urecommend" class="menu"><a href="admincp.php?ac=corptype">社团分类</a></li>
-		<li id="urecommend" class="menu"><a href="admincp.php?ac=adminmana">管理员管理</a></li>
+		<li class="menu-separator"><a class="separator" href="?unfoldmenu=1"><br /></a></li>
 	{/if}
 	<div class="footer">Copyright &copy; 2011<br />All Rights Reserved</div>
 </ul>

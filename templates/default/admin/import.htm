@@ -1,0 +1,24 @@
+{if $op == 'default'}
+	<div class="main_header">
+		<div id="icon-center" class="icon32"><br /></div>
+		<h2>导入学生信息</h2>
+	</div>
+	<div class="content">
+		<form enctype="multipart/form-data" action="admincp.php?ac=import&op=import" method="POST">
+		<table width="486" height="103" border="1" cellpadding="0" cellspacing="0" >
+		<tr>
+		<td width="103" height="45" align="right"><div align="center">
+		<span >*</span>文件地址
+		</div>
+		</td>
+		<td width="377" height="45"><input type="file" name="filename"></td>
+		</tr>
+		<tr>
+		<td height="33" align="right" colspan="2">
+		<p align="center"><input type="submit" value="导入">
+		&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" value="重置"></p></td>
+		</tr>
+		</table>
+	</form>
+	</div>
+{/if}

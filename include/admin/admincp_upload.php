@@ -14,7 +14,7 @@ if($op == 'default' || $op == 'list'){
 
 if($op == 'process'){
 	$gid = getcookie('gid');
-	if($gid == 1){
+	if($gid >= 2){
 		echo "<script>alert('您没上传文件权限');</script>";
 		echo "<script>location.href='admincp.php?ac=upload';</script>";
 		exit;
