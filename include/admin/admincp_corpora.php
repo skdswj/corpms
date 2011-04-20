@@ -66,12 +66,21 @@
 	}
 	if($op == 'del'){
 		//注销社团
+		print_r($_GET);
+		if($gid >= 2){
+		echo "<script>alert('您没注销社团权限');</script>";
+		echo "<script>location.href='admincp.php?ac=display';</script>";
+		exit;
+		}
+
 		$sql = 'DELETE FROM '.tname('corporation').' WHERE `cid` = "'.$_GET['cid'].'" LIMIT 1';
 		$db->query($sql);
 		$usql = 'DELETE FROM '.tname('user_corporation').' WHERE `cid` = "'.$_GET['cid'].'"';
-		$db->query($usql);
+		$db->query($usql);				
+	
 		header("HTTP/1.1 301 Moved Permanently");
-		header("Location: admincp.php?ac=corpora&op=display");
+		header("Location: admincp.php?ac=corpora&op=display&msg=删除成功！");
+		
 	}
 	if($op == 'apply'){
 		//申请社团

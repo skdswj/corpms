@@ -15,7 +15,7 @@
 				{if $gid < 2}<!-- 是否管理员 -->
 				<td><a href="admincp.php?ac=corpora&op=show_change&cid={$corp['cid']}" >修改</a></td>
 				<td><a href="admincp.php?ac=corpora&op=add_info&cid={$corp['cid']}" >添加/修改附加信息</a></td>
-				<td><a href="admincp.php?ac=corpora&op=del&cid={$corp['cid']}" >注销</a></td>
+				<td><a href="admincp.php?ac=corpora&op=show_del&cid={$corp['cid']}" >注销</a></td>
 				{/if}	
 			</tr>
 		{/loop}
@@ -49,7 +49,7 @@
 		<tr><td>附加信息</td><td>{$cinfo['others']}</td></tr>
 		{if $gid < 2}<!-- 是否管理员 -->
 		<tr><td><a href="admincp.php?ac=corpora&op=show_change&cid={$cinfo['cid']}" >修改</a></td>
-		<td><a href="admincp.php?ac=corpora&op=del&cid={$cinfo['cid']}" >注销</a></td></tr>
+		<td><a href="admincp.php?ac=corpora&op=show_del&cid={$cinfo['cid']}" >注销</a></td></tr>
 		{else}
 		<tr><td>&nbsp;</td><td><a href="admincp?ac=corpora&op=apply&cid={$cinfo['cid']}">申请加入</a></td></tr>
 		{/if}
@@ -131,5 +131,16 @@
 			<textarea name="others">{$others}</textarea>
 			<input type="submit" value="添加">		
 		</form>
+	</div>
+{/if}
+{if $op == 'show_del'}
+	<div class="main_header">
+		<div id="icon-center" class="icon32"><br /></div>
+		<h2>注销社团</h2>
+	</div>
+	<div class="content">
+		<h2>确定要注销该社团吗？</h2>
+		<a href="admincp.php?ac=corpora&op=del&cid={$_GET['cid']}">确定</a>
+		<a href="admincp.php?ac=corpora&op=display">取消</a>
 	</div>
 {/if}
