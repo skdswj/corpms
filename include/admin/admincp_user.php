@@ -117,6 +117,11 @@
 	}
 	if($op == 'del'){
 		//删除会员
+		if($gid > 2){
+		echo "<script>alert('您没删除会员权限');</script>";
+		echo "<script>location.href='admincp.php?ac=display';</script>";
+		exit;
+		}
 		$sql = 'DELETE FROM '.tname('user').' WHERE `uid` = '.$_GET['uid'].' LIMIT 1';
 		$db->query($sql);
 		$usql = 'DELETE FROM '.tname('user_corporation').' WHERE `uid` = '.$_GET['uid'];

@@ -1,14 +1,22 @@
+
 <div class="main_header">
 	<div id="icon-center" class="icon32"><br /></div> 
+{if $gid <= 2}
 	<h2>控制中心</h2>
 </div>
 <div class="content">
 	欢迎来到管理后台，请在左侧菜单中选择你所要进行的操作！
+{else}
+<h2>我的社团</h2>
+</div>
+<div class="content">
+	欢迎{$username}来到我的社团，您<span style="color:red;">{echo getcookie('had_reg')}</span>.
+{/if}
 	<br /><br />
 	<h3>近期公告</h3>
 	{loop $pubnotices $pubnotice}
-		<h4>{$pubnotice[title]}</h4>
-		{$pubnotice[content]}<br />
-		{$pubnotice[dateline]}<br /><br />
+		<h4>{$pubnotice['title']}</h4>
+		{$pubnotice['content']}<br />
+		{$pubnotice['dateline']}<br /><br />
 	{/loop}
 </div>

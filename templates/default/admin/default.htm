@@ -31,20 +31,9 @@ $(document).ready(function() {
 
 	/* Apply fancybox to multiple items */
 	
-	$("a.group").fancybox({
-		'transitionIn'	:	'elastic',
-		'transitionOut'	:	'elastic',
-		'speedIn'		:	600, 
-		'speedOut'		:	200, 
-		'overlayShow'	:	false
-	});
+	$("a.left_corp").fancybox();
 	
-	$("a.pro_des").fancybox();
-	
-	$("a.show_info").fancybox();
-	
-	$("a.inline").fancybox();
-	
+	$("a.apply").fancybox();
 });
 </script>
 <!-- fancybox 调用jQuery end -->
@@ -53,18 +42,26 @@ $(document).ready(function() {
 <body>
 <div class="head"><h1 class="left"><span id="site-title">后台</span></h1> 
 <div class="right">
-<a href="cp.php?ac=home">{$username}</a> | <a href="cp.php?ac=login" title="退出">退出</a>
+<a href="admincp.php?ac=user&op=showinfo&uid={$uid}">{$username}(<span style="color:red;">{echo getcookie('had_reg')}</span>)</a> | <a href="cp.php?ac=login" title="退出">退出</a>
 </div>
 </div>
 <ul class="admin_menu">
-	<li id="center" class="menu"><a href="admincp.php">控制中心</a></li>
-	<li class="menu-separator"><a class="separator" href="?unfoldmenu=1"><br /></a></li>
+	{if $gid <= 2}
+		<li id="center" class="menu"><a href="admincp.php">控制中心</a></li>
+		<li class="menu-separator"><a class="separator" href="?unfoldmenu=1"><br /></a></li>
+	{else}
+		<li id="center" class="menu"><a href="admincp.php">我的社团</a></li>
+		<li class="menu-separator"><a class="separator" href="?unfoldmenu=1"><br /></a></li>
+	{/if}
+
 	{if $gid <= 4}
 		<!-- 普通会员 -->
 		<li id="urecommend" class="menu"><a href="admincp.php?ac=user&op=showinfo&uid={echo getcookie('uid')}">个人信息</a></li>
+		<li id="urecommend" class="menu"><a href="admincp.php?ac=user&op=new_password&uid={echo getcookie('uid')}">个人密码修改</a></li>
 	{/if}
 	{if $gid == 4 || $gid == 3}
 		<li id="urecommend" class="menu"><a href="admincp.php?ac=corpora">查看社团信息</a></li>
+		<li id="urecommend" class="menu"><a href="admincp.php?ac=corpora&op=had_in">已加入社团</a></li>
 	{/if}
 	{if $gid <= 3}
 		<!-- 社团负责人 -->

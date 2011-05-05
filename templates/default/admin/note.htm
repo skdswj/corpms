@@ -9,10 +9,10 @@
 		<tr><td>姓名</td><td>标题</td><td>发表时间</td><td colspan="1">操作</td></tr>
 		{loop $note_arr $note}
 			<tr>
-				<td><a href="admincp.php?ac=user&op=showinfo&uid={$note[uid]}">{$note['username']}</a></td>
-				<td><a href="admincp.php?ac=note&op=showinfo&nid={$note[nid]}" >{$note['title']}</a></td>
+				<td><a href="admincp.php?ac=user&op=showinfo&uid={$note['uid']}">{$note['username']}</a></td>
+				<td><a href="admincp.php?ac=note&op=showinfo&nid={$note['nid']}" >{$note['title']}</a></td>
 				<td>{$note['dateline']}</td>
-				<td><a href="admincp.php?ac=note&op=del&nid={$note[nid]}" >删除</a></td>
+				<td><a href="admincp.php?ac=note&op=del&nid={$note['nid']}" >删除</a></td>
 			</tr>
 		{/loop}
 	</table>

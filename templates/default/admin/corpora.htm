@@ -4,15 +4,15 @@
 	<h2>社团管理</h2>
 </div>
 <div class="content">
-	{if $gid < 2}<h3><a href="admincp.php?ac=corpora&op=show_add">添加社团</a></h3>{/if}<!-- 是否管理员 -->	
+	{if $gid <= 2}<h3><a href="admincp.php?ac=corpora&op=show_add">添加社团</a></h3>{/if}<!-- 是否管理员 -->	
 	<table border="1" >
-		<tr><td>ID</td><td>社团名称</td><td>学院</td>{if $gid < 2}<td colspan="3">操作</td></tr>{/if}	<!-- 是否管理员 -->
+		<tr><td>ID</td><td>社团名称</td><td>学院</td>{if $gid <= 2}<td colspan="3">操作</td></tr>{/if}	<!-- 是否管理员 -->
 		{loop $corp_arr $corp}
 			<tr>
-				<td>{$corp['cid']}</td>
+				<td>{$corp['corpid']}</td>
 				<td><a href="admincp.php?ac=corpora&op=showinfo&cid={$corp['cid']}" >{$corp['cname']}</a></td>
 				<td>{$corp['coname']}</td>
-				{if $gid < 2}<!-- 是否管理员 -->
+				{if $gid <= 2}<!-- 是否管理员 -->
 				<td><a href="admincp.php?ac=corpora&op=show_change&cid={$corp['cid']}" >修改</a></td>
 				<td><a href="admincp.php?ac=corpora&op=add_info&cid={$corp['cid']}" >添加/修改附加信息</a></td>
 				<td><a href="admincp.php?ac=corpora&op=show_del&cid={$corp['cid']}" >注销</a></td>
@@ -39,19 +39,20 @@
 </div>
 <div class="content">
 	<table border="1" >
-		<tr><td>编号</td><td>{$cinfo['cid']}</td></tr>
+		<tr><td>编号</td><td>{$cinfo['corpid']}</td></tr>
 		<tr><td>社团名称</td><td>{$cinfo['cname']}</td></tr>
+		<tr><td>社团负责人</td><td><a href="admincp.php?ac=user&op=showinfo&uid={$user['uid']}" >{$user['username']}</a></td></tr>
 		<tr><td>学院</td><td>{$cinfo['coname']}</td></tr>
 		<tr><td>分类</td><td>{$cinfo['tname']}</td></tr>
 		<tr><td>会费</td><td>{$cinfo['dues']}</td></tr>
 		<tr><td>会员</td><td>{$cinfo['curnum']}/{$cinfo['maxnum']}</td></tr>
 		<tr><td>社团简介</td><td>{$cinfo['information']}</td></tr>
 		<tr><td>附加信息</td><td>{$cinfo['others']}</td></tr>
-		{if $gid < 2}<!-- 是否管理员 -->
+		{if $gid <= 2}<!-- 是否管理员 -->
 		<tr><td><a href="admincp.php?ac=corpora&op=show_change&cid={$cinfo['cid']}" >修改</a></td>
 		<td><a href="admincp.php?ac=corpora&op=show_del&cid={$cinfo['cid']}" >注销</a></td></tr>
-		{else}
-		<tr><td>&nbsp;</td><td><a href="admincp?ac=corpora&op=apply&cid={$cinfo['cid']}">申请加入</a></td></tr>
+		{elseif !$hadin}
+		<tr><td>&nbsp;</td><td><a class="apply" href="./fancybox/fancybox.php?op=apply&cid={$cinfo['cid']}">申请加入</a></td></tr>
 		{/if}
 	</table>
 </div>
@@ -64,7 +65,7 @@
 <div class="content">
 	<form action="admincp.php?ac=corpora&op=add" method="post">
 		<label for="cname">社团名称：</label><input type="text" id="cname" name="cname" /><br />
-		<label for="cid">社团编号：</label><input type="text" id="cid" name="cid" /><br />
+		<label for="corpid">社团编号：</label><input type="text" id="corpid" name="corpid" /><br />
 		<label for="dues">会费：</label><input type="text" id="dues" name="dues" /><br />
 		<label for="maxnum">最大人数：</label><input type="text" id="maxnum" name="maxnum" /><br />
 		所属学院：<select name="coid">
@@ -90,7 +91,7 @@
 	</div>
 	<div class="content">
 		<form action="admincp.php?ac=corpora&op=change&cid={$cinfo['cid']}" method="post">
-			<h3>社团编号：{$cinfo['cid']}</h3>
+			<label for="corpid">社团编号：</label><input type="text" id="corpid" name="corpid" value="{$cinfo['corpid']}" /><br />
 			<label for="cname">社团名称：</label><input type="text" id="cname" name="cname" value="{$cinfo['cname']}"/><br />
 			<label for="dues">会费：</label><input type="text" id="dues" name="dues" value="{$cinfo['dues']}"/><br />
 			<label for="maxnum">最大人数：</label><input type="text" id="maxnum" name="maxnum" value="{$cinfo['maxnum']}" /><br />
@@ -142,5 +143,24 @@
 		<h2>确定要注销该社团吗？</h2>
 		<a href="admincp.php?ac=corpora&op=del&cid={$_GET['cid']}">确定</a>
 		<a href="admincp.php?ac=corpora&op=display">取消</a>
+	</div>
+{/if}
+{if $op == 'had_in'}
+	<div class="main_header">
+		<div id="icon-center" class="icon32"><br /></div>
+		<h2>社团</h2>
+	</div>
+	<div class="content">
+		<table border="1" >
+			<tr><td>ID</td><td>社团名称</td><td>学院</td><td>操作</td>
+			{loop $corp_arr $corp}
+				<tr>
+					<td>{$corp['corpid']}</td>
+					<td><a href="admincp.php?ac=corpora&op=showinfo&cid={$corp['cid']}" >{$corp['cname']}</a></td>
+					<td>{$corp['coname']}</td>
+					<td><a class="left_corp" href="./fancybox/fancybox.php?op=left_corp&cid={$corp['cid']}">退出社团</a></td>
+				</tr>
+			{/loop}
+		</table>
 	</div>
 {/if}

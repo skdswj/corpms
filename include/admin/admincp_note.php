@@ -15,7 +15,8 @@
 	}
 	if($op == 'showinfo'){
 		//显示会员信息
-		$sql = 'SELECT * FROM '.tname('user').','.tname('note')." WHERE nid = $_GET['nid'] and ".tname('user').'.uid = '.tname('note').'.uid';
+		$nid = $_GET['nid'];
+		$sql = 'SELECT * FROM '.tname('user').','.tname('note')." WHERE nid = $nid and ".tname('user').'.uid = '.tname('note').'.uid';
 		$noteinfo = $db->fetch_first($sql);
 		#$cosql = 'SELECT * FROM '.tname('user_corporation').','.tname('duty').','.tname('corporation').' WHERE corp_user_corporation.did = corp_duty.did AND corp_user_corporation.cid = corp_corporation.cid AND `uid` = '.$_GET['uid'];
 		#$co_arr = $db->fetch_all($cosql);
